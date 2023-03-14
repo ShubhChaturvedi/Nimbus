@@ -39,13 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core.apps.CoreConfig',
+    'accounts.apps.AccountsConfig'
+    
 ]
 
-EXTERNAL_APPS = [
-    'accounts',
-]
+# Custom ADD
 
-INSTALLED_APPS += EXTERNAL_APPS
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

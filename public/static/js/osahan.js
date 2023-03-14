@@ -1,0 +1,1 @@
+(function($){"use strict";$('[data-toggle="tooltip"]').tooltip();$('.osahan-slider').slick({centerMode:true,centerPadding:'30px',slidesToShow:2,responsive:[{breakpoint:768,settings:{arrows:false,centerMode:true,centerPadding:'40px',slidesToShow:1}},{breakpoint:480,settings:{arrows:false,centerMode:true,centerPadding:'40px',slidesToShow:1}}]});})(jQuery);
