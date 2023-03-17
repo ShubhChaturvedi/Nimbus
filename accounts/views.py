@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login 
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate
+from django.contrib.auth import logout as auth_logout
 from .backends import EmailBackend
 
 
@@ -38,3 +39,10 @@ def signup(request):
             return redirect('/dashboard/')
 
     return render(request, "accounts/sign-up.html")
+
+def logout(request):
+    auth_logout(request)
+    return redirect("/accounts/login")
+
+def forgotPwd(request):
+    return render(request, "accounts/forgot-password.html")
