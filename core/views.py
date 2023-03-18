@@ -7,6 +7,7 @@ from accounts.models import Profile
 
 
 def index(request):
+    print(request.user.is_authenticated)
     if request.user.is_authenticated:
         return render(request, 'dashboard/index.html')
     return redirect('/accounts/login')
