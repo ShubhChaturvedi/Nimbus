@@ -16,3 +16,6 @@ def edit_profile(request):
     user = request.user
     profile = Profile.objects.filter(username=user.username).first()
     return render(request, 'dashboard/edit-profile.html', context={'profile': profile})
+
+def my_account(request):
+    return render(request, "dashboard/profile.html")
