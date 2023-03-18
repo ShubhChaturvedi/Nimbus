@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 # import login_required
 from django.contrib.auth.decorators import login_required
-from accounts.models import Profile
+from accounts.models import *
 
 
 # Create your views here.
@@ -25,4 +25,6 @@ def edit_profile(request):
 def my_account(request):
     user = request.user
     profile = Profile.objects.filter(username=user.username).first()
-    return render(request, "dashboard/profile.html", context={'profile': profile})
+    social = Social.objects.filter(user=profile).first()
+    print(social)
+    return render(request, "dashboard/profile.html", context={'profile': profile,'social':social})
