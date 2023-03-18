@@ -50,7 +50,7 @@ def edit_profile(request):
                 dob.day = day
                 dob.year = year
             else:
-                dob = DOB.objects.create(month=month, day=day, year=year, profile=profile, gender=gender)
+                dob = DOB.objects.create(month=month, day=day, year=year, user=profile, gender=gender)
 
             dob.save()
             profile.save()
