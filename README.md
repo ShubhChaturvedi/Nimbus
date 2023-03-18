@@ -7,7 +7,6 @@
 ## Features 
 * User Profiles
 * Listings for employment and Internships
-* Collaborative project spaces
 * News feed and a Schedule of events
 * A messaging system for Students and a alumni 
 * Enabling Knowledge Sharing and promoting communication
@@ -17,7 +16,9 @@
 * Django -> For building Web Backends and APIs
 * HTML,CSS,& Vanilla JS -> For building User Interfaces 
 ## Dependency
-* JWT User Authentication
+* Django Sessions
+* Bootstrap
+* Gunicorn
 * Git Github Version Control
 * Maria DB Backend
 ## ER Diagrams 
