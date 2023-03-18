@@ -85,14 +85,15 @@
     </div>
   </aside>
   <main class="col-md-8">
+      <form class="js-validate" novalidate="novalidate" method="post">
+        {% csrf_token %}
     <div class="border rounded bg-white mb-3">
       <div class="box-title border-bottom p-3">
         <h6 class="m-0">Edit Basic Info</h6>
         <p class="mb-0 mt-0 small">Lorem ipsum dolor sit amet, consecteturs.
         </p>
       </div>
-      <div class="box-body p-3">
-        <form class="js-validate" novalidate="novalidate">
+        <div class="box-body p-3">
           <div class="row">
 
             <div class="col-sm-6 mb-2">
@@ -102,7 +103,7 @@
                   <span class="text-danger">*</span>
                 </label>
                 <div class="form-group">
-                  <input type="text" class="form-control" name="name" value="{{ profile.first_name }}"
+                  <input type="text" class="form-control" name="fname" value="{{ profile.first_name }}"
                          placeholder="Enter your name" aria-label="Enter your name" required=""
                          aria-describedby="nameLabel" data-msg="Please enter your name." data-error-class="u-has-error"
                          data-success-class="u-has-success">
@@ -120,7 +121,7 @@
                   <span class="text-danger">*</span>
                 </label>
                 <div class="form-group">
-                  <input type="text" class="form-control" name="last" value="{{ profile.last_name }}"
+                  <input type="text" class="form-control" name="lname" value="{{ profile.last_name }}"
                          placeholder="Enter your last name" aria-label="Enter your last name" required=""
                          aria-describedby="usernameLabel" data-msg="Please enter your last name."
                          data-error-class="u-has-error" data-success-class="u-has-success">
@@ -185,7 +186,6 @@
             </div>
 
 
-
             <div class="col-sm-6 mb-2">
               <div class="js-form-message">
                 <label id="locationLabel" class="form-label">
@@ -212,7 +212,7 @@
                   <span class="text-danger">*</span>
                 </label>
                 <div class="form-group">
-                  <input class="form-control" type="tel" name="phoneNumber" value="{{ profile.phone }}"
+                  <input class="form-control" type="tel" name="phone" value="{{ profile.phone }}"
                          placeholder="Enter your phone number" aria-label="Enter your phone number" required=""
                          aria-describedby="phoneNumberLabel" data-msg="Please enter a valid phone number"
                          data-error-class="u-has-error" data-success-class="u-has-success">
@@ -226,23 +226,23 @@
 
 
             <!--<editor-fold desc="preferred language">-->
-{#            <div class="col-sm-6 mb-2">#}
-{#              <div class="js-form-message">#}
-{#                <label class="form-label">#}
-{#                  Preferred language#}
-{#                  <span class="text-danger">*</span>#}
-{#                </label>#}
-{#                <div class="form-group">#}
-{#                  <select class="custom-select">#}
-{#                    <option value="">Select language</option>#}
-{#                    <option value="languageSelect1" selected="">English</option>#}
-{#                    <option value="languageSelect2">Français</option>#}
-{#                    <option value="languageSelect3">Deutsch</option>#}
-{#                    <option value="languageSelect4">Português</option>#}
-{#                  </select>#}
-{#                </div>#}
-{#              </div>#}
-{#            </div>#}
+            {#            <div class="col-sm-6 mb-2">#}
+            {#              <div class="js-form-message">#}
+            {#                <label class="form-label">#}
+            {#                  Preferred language#}
+            {#                  <span class="text-danger">*</span>#}
+            {#                </label>#}
+            {#                <div class="form-group">#}
+            {#                  <select class="custom-select">#}
+            {#                    <option value="">Select language</option>#}
+            {#                    <option value="languageSelect1" selected="">English</option>#}
+            {#                    <option value="languageSelect2">Français</option>#}
+            {#                    <option value="languageSelect3">Deutsch</option>#}
+            {#                    <option value="languageSelect4">Português</option>#}
+            {#                  </select>#}
+            {#                </div>#}
+            {#              </div>#}
+            {#            </div>#}
             <!--</editor-fold>-->
 
           </div>
@@ -257,7 +257,7 @@
             <div class="col-md-6 mb-3 mb-sm-6">
               <div class="js-form-message">
                 <div class="form-group">
-                  <select class="form-control custom-select" required="" data-msg="Please select month."
+                  <select class="form-control custom-select" name="month" required="" data-msg="Please select month."
                           data-error-class="u-has-error" data-success-class="u-has-success">
                     <option value="">Select month</option>
                     <option value="birthMonthSelect1">January</option>
@@ -281,7 +281,7 @@
             <div class="col-sm-4 col-md-2 mb-3 mb-sm-6">
               <div class="js-form-message">
                 <div class="form-group">
-                  <select class="form-control custom-select" required="" data-msg="Please select date."
+                  <select class="form-control custom-select" required="" name="day" data-msg="Please select date."
                           data-error-class="u-has-error" data-success-class="u-has-success">
                     <option value="">Select date</option>
                     <option value="birthDateSelect1">1</option>
@@ -324,7 +324,7 @@
             <div class="col-sm-4 col-md-2 mb-3 mb-sm-6">
               <div class="js-form-message">
                 <div class="form-group">
-                  <select class="form-control custom-select" required="" data-msg="Please select year."
+                  <select class="form-control custom-select" required="" name="year" data-msg="Please select year."
                           data-error-class="u-has-error" data-success-class="u-has-success">
                     <option value="">Select year</option>
                     <option value="birthYearSelect1900">1900</option>
@@ -454,7 +454,7 @@
             <div class="col-sm-4 col-md-2 mb-2">
               <div class="js-form-message">
                 <div class="form-group">
-                  <select class="form-control custom-select" required="" data-msg="Please select your gender."
+                  <select class="form-control custom-select" required="" name="gender" data-msg="Please select your gender."
                           data-error-class="u-has-error" data-success-class="u-has-success">
                     <option value="genderSelect1" selected="">Male</option>
                     <option value="genderSelect2">Female</option>
@@ -466,60 +466,64 @@
 
           </div>
           <!-- </editor-fold> -->
-        </form>
-      </div>
-    </div>
-    <div class="border rounded bg-white mb-3">
-      <div class="box-title border-bottom p-3">
-        <h6 class="m-0">Experience
-        </h6>
-        <p class="mb-0 mt-0 small">Tell about your work, job, and other experiences.
-        </p>
-      </div>
-      <div class="box-body px-3 pt-3 pb-0">
-        <div class="row">
-          <div class="col-sm-6 mb-4">
-            <label id="FROM" class="form-label">FROM</label>
-
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="From" aria-label="FROM" aria-describedby="FROM">
-            </div>
-
-          </div>
-          <div class="col-sm-6 mb-4">
-            <label id="TO" class="form-label">TO</label>
-
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="TO" aria-label="TO" aria-describedby="TO">
-            </div>
-
-          </div>
         </div>
-        <div class="row">
-          <div class="col-sm-6 mb-4">
-            <label id="companyLabel" class="form-label">Company</label>
-
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter your company title"
-                     aria-label="Enter your company title" aria-describedby="companyLabel">
-            </div>
-
-          </div>
-          <div class="col-sm-6 mb-4">
-            <label id="positionLabel" class="form-label">Position</label>
-
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter your position" aria-label="Enter your position"
-                     aria-describedby="positionLabel">
-            </div>
-
-          </div>
-        </div>
-      </div>
     </div>
+    <!--<editor-fold desc="Experience">-->
+    {#    <div class="border rounded bg-white mb-3">#}
+    {#      <div class="box-title border-bottom p-3">#}
+    {#        <h6 class="m-0">Experience#}
+    {#        </h6>#}
+    {#        <p class="mb-0 mt-0 small">Tell about your work, job, and other experiences.#}
+    {#        </p>#}
+    {#      </div>#}
+    {#      <div class="box-body px-3 pt-3 pb-0">#}
+    {#        <div class="row">#}
+    {#          <div class="col-sm-6 mb-4">#}
+    {#            <label id="FROM" class="form-label">FROM</label>#}
+    {##}
+    {#            <div class="input-group">#}
+    {#              <input type="text" class="form-control" placeholder="From" aria-label="FROM" aria-describedby="FROM">#}
+    {#            </div>#}
+    {##}
+    {#          </div>#}
+    {#          <div class="col-sm-6 mb-4">#}
+    {#            <label id="TO" class="form-label">TO</label>#}
+    {##}
+    {#            <div class="input-group">#}
+    {#              <input type="text" class="form-control" placeholder="TO" aria-label="TO" aria-describedby="TO">#}
+    {#            </div>#}
+    {##}
+    {#          </div>#}
+    {#        </div>#}
+    {#        <div class="row">#}
+    {#          <div class="col-sm-6 mb-4">#}
+    {#            <label id="companyLabel" class="form-label">Company</label>#}
+    {##}
+    {#            <div class="input-group">#}
+    {#              <input type="text" class="form-control" placeholder="Enter your company title"#}
+    {#                     aria-label="Enter your company title" aria-describedby="companyLabel">#}
+    {#            </div>#}
+    {##}
+    {#          </div>#}
+    {#          <div class="col-sm-6 mb-4">#}
+    {#            <label id="positionLabel" class="form-label">Position</label>#}
+    {##}
+    {#            <div class="input-group">#}
+    {#              <input type="text" class="form-control" placeholder="Enter your position" aria-label="Enter your position"#}
+    {#                     aria-describedby="positionLabel">#}
+    {#            </div>#}
+    {##}
+    {#          </div>#}
+    {#        </div>#}
+    {#      </div>#}
+    {#    </div>#}
+    <!--</editor-fold>-->
+
+
     <div class="mb-3 text-right">
-      <a class="font-weight-bold btn btn-link rounded p-3" href="#"> &nbsp;&nbsp;&nbsp;&nbsp; Cancel &nbsp;&nbsp;&nbsp;&nbsp; </a>
-      <a class="font-weight-bold btn btn-primary rounded p-3" href="#"> &nbsp;&nbsp;&nbsp;&nbsp; Sava Chenges &nbsp;&nbsp;&nbsp;&nbsp; </a>
+{#      <button type="reset" class="font-weight-bold btn btn-link rounded p-3"> &nbsp;&nbsp;&nbsp;&nbsp; Cancel &nbsp;&nbsp;&nbsp;&nbsp; </button>#}
+      <button type="submit" class="font-weight-bold btn btn-primary rounded p-3" name="btn" value="profile"> &nbsp;&nbsp;&nbsp;&nbsp; Sava Chenges &nbsp;&nbsp;&nbsp;&nbsp; </button>
     </div>
+      </form>
   </main>
 {% endblock %}
