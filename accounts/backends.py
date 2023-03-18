@@ -5,6 +5,8 @@ class EmailBackend(BaseBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         try:
             user = User.objects.get(email=username)
+            print(user)
+            print(user.check_password(raw_password= password))
         except User.DoesNotExist:
             return None
         else:

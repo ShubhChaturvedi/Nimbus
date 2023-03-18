@@ -14,8 +14,10 @@ def login(request):
         email = request.POST.get("email")
         password = request.POST.get("password")
         user = authenticate(request, username=email, password=password)
+        print(user)
         if user is not None:
             auth_login(request, user)
+            print("Login", request.user.is_authenticated)
             # messages.success(request,"Your id has been successfully registered")
             # messages.success(request, "Successfully Logged In")
             return redirect('/dashboard/')
@@ -32,6 +34,7 @@ def signup(request):
         myuser = User.objects.create_user(username, email, password)
         myuser.save()
         user = authenticate(username = username, password = password)
+        print(user)
         if user is not None:
             auth_login(request, user)
             # messages.success(request,"Your id has been successfully registered")
