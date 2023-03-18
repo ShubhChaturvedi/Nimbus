@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 # import login_required
 from django.contrib.auth.decorators import login_required
 from accounts.models import *
+import random
 
 
 # Create your views here.
@@ -23,8 +24,7 @@ def edit_profile(request):
 
 @login_required
 def my_account(request):
+    all_users = Profile.objects.order_by("?")[:5]
     user = request.user
     profile = Profile.objects.filter(username=user.username).first()
-    social = Social.objects.filter(user=profile).first()
-    print(social)
-    return render(request, "dashboard/profile.html", context={'profile': profile,'social':social})
+    return render(request, "dashboard/profile.html", context={'profile': profile,'all_users':all_users})
