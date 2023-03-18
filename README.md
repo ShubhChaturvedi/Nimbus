@@ -22,3 +22,11 @@
 * Git Github Version Control
 * Maria DB Backend
 ## ER Diagrams 
+
+## Data Flow Diagram
+![DFD](https://user-images.githubusercontent.com/122177943/226121229-61d0ce8e-30fb-4d54-99ae-9af6c00b1529.png)
+## Url Patterns
+## How to install
+## Run Projects
+## Bibliography
+## How to Contribute
