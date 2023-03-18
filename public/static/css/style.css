@@ -1,10 +1,22 @@
-@import '../../../../css';
 
 body {
     background: #161616;
     font-size: 13px;
     font-family: ubuntu, sans-serif;
     color: #fff
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: #3e3e3e;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: black;
 }
 
 p {
@@ -367,7 +379,7 @@ ul.sidebar-card-list {
     color: #585b5f
 }
 
-.sidebar-card-list>li {
+.sidebar-card-list > li {
     line-height: 32px;
     list-style: none
 }
@@ -638,10 +650,10 @@ hr {
 }
 
 .navbar-light .navbar-brand,
-.navbar-light .navbar-nav .active>.nav-link,
+.navbar-light .navbar-nav .active > .nav-link,
 .navbar-light .navbar-nav .nav-link.active,
 .navbar-light .navbar-nav .nav-link.show,
-.navbar-light .navbar-nav .show>.nav-link {
+.navbar-light .navbar-nav .show > .nav-link {
     color: rgba(255, 255, 255, .9)
 }
 
@@ -839,7 +851,7 @@ small {
     border: .125rem solid #fff
 }
 
-@media(max-width:768px) {
+@media (max-width: 768px) {
     .osahan-nav-top .dropdown-menu {
         width: 100% !important
     }

@@ -57,8 +57,18 @@ def edit_profile(request):
 
     user = request.user
     profile = Profile.objects.filter(username=user.username).first()
+
     social = profile.social_set.first()
     return render(request, 'dashboard/edit-profile.html', context={
         'profile': profile,
         'social': social
     })
+    return render(request, 'dashboard/edit-profile.html', context={'profile': profile})
+
+
+@login_required
+def my_account(request):
+    all_users = Profile.objects.order_by("?")[:5]
+    user = request.user
+    profile = Profile.objects.filter(username=user.username).first()
+    return render(request, "dashboard/profile.html", context={'profile': profile,'all_users':all_users})

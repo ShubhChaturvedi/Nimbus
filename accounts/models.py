@@ -14,6 +14,7 @@ class Profile(User):
     website = models.CharField(max_length=100, null=True, blank=True)
     location = models.CharField(max_length=100, null=True, blank=True)
     bio = models.TextField(max_length=1000, null=True, blank=True)
+    about = models.TextField(max_length=10000, null=True, blank=True)
     profile_image = models.ImageField(upload_to="user/profile", null=True, blank=True)
     job_experience = models.CharField(max_length=100, null=True, blank=True)
 
