@@ -220,7 +220,7 @@
     <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
       <div class="py-4 px-3 border-bottom">
         <img src="{% static "img/p13.png" %}" class="img-fluid mt-2 rounded-circle" alt="Responsive image">
-        <h5 class="font-weight-bold text-dark mb-1 mt-4">Gurdeep Osahan</h5>
+        <h5 class="font-weight-bold text-dark mb-1 mt-4">{{ request.user.first_name }} {{ request.user.last_name }}</h5>
         <p class="mb-0 text-muted">UI / UX Designer</p>
       </div>
       <div class="d-flex">
