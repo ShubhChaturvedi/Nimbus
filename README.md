@@ -16,7 +16,7 @@
 * Django -> For building Web Backends and APIs
 * HTML,CSS,& Vanilla JS -> For building User Interfaces 
 ## Dependency
-* Django Sessions
+* Django Session
 * Bootstrap
 * Gunicorn
 * Git Github Version Control
