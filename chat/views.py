@@ -5,4 +5,6 @@ def chatIndex(request):
     return render(request , 'dashboard/messages.html')
 
 def roomName(request, room_name):
-    return HttpResponse("Welcome to chat room")
+    return render(request , 'dashboard/messages.html', {
+        "room_name" : room_name
+    })
