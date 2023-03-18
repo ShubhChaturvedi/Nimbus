@@ -165,83 +165,33 @@
             <h6 class="m-0">Who viewed your profile</h6>
         </div>
         <div class="box-body p-3">
+            {% for users in all_users %}
             <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
                 <div class="dropdown-list-image mr-3">
                     <img class="rounded-circle" src="{% static "img/p4.png" %}" alt="">
                     <div class="status-indicator bg-success"></div>
                 </div>
                 <div class="font-weight-bold mr-2">
-                    <div class="text-truncate">Sophia Lee</div>
+                    <div class="text-truncate">{{ users.username }}</div>
                     <div class="small text-gray-500">@Harvard
                     </div>
                 </div>
                 <span class="ml-auto"><button type="button" class="btn btn-light btn-sm">Connent</button>
 </span>
             </div>
-            <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-                <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="{% static "img/p9.png" %}" alt="">
-                    <div class="status-indicator bg-success"></div>
-                </div>
-                <div class="font-weight-bold mr-2">
-                    <div class="text-truncate">John Doe</div>
-                    <div class="small text-gray-500">Traveler
-                    </div>
-                </div>
-                <span class="ml-auto"><button type="button" class="btn btn-light btn-sm">Connent</button>
-</span>
-            </div>
-            <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-                <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="{% static "img/p10.png" %}" alt="">
-                    <div class="status-indicator bg-success"></div>
-                </div>
-                <div class="font-weight-bold mr-2">
-                    <div class="text-truncate">Julia Cox</div>
-                    <div class="small text-gray-500">Art Designer
-                    </div>
-                </div>
-                <span class="ml-auto"><button type="button" class="btn btn-light btn-sm">Connent</button>
-</span>
-            </div>
-            <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-                <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="{% static "img/p11.png" %}" alt="">
-                    <div class="status-indicator bg-success"></div>
-                </div>
-                <div class="font-weight-bold mr-2">
-                    <div class="text-truncate">Robert Cook</div>
-                    <div class="small text-gray-500">@Photography
-                    </div>
-                </div>
-                <span class="ml-auto"><button type="button" class="btn btn-light btn-sm">Connent</button>
- </span>
-            </div>
-            <div class="d-flex align-items-center osahan-post-header people-list">
-                <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="{% static "img/p12.png" %}" alt="">
-                    <div class="status-indicator bg-success"></div>
-                </div>
-                <div class="font-weight-bold mr-2">
-                    <div class="text-truncate">Richard Bell</div>
-                    <div class="small text-gray-500">@Envato
-                    </div>
-                </div>
-                <span class="ml-auto"><button type="button" class="btn btn-light btn-sm">Connent</button>
-</span>
-            </div>
+            {% endfor %}
         </div>
     </div>
-    <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center overflow-hidden">
-        <img src="{% static "img/ads1.png" %}" class="img-fluid" alt="Responsive image">
-        <div class="p-3 border-bottom">
-            <h6 class="font-weight-bold text-gold">Osahanin Premium</h6>
-            <p class="mb-0 text-muted">Grow &amp; nurture your network</p>
-        </div>
-        <div class="p-3">
-            <button type="button" class="btn btn-outline-gold pl-4 pr-4"> ACTIVATE</button>
-        </div>
-    </div>
+<!--    <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center overflow-hidden">-->
+<!--        <img src="{% static "img/ads1.png" %}" class="img-fluid" alt="Responsive image">-->
+<!--        <div class="p-3 border-bottom">-->
+<!--            <h6 class="font-weight-bold text-gold">Osahanin Premium</h6>-->
+<!--            <p class="mb-0 text-muted">Grow &amp; nurture your network</p>-->
+<!--        </div>-->
+<!--        <div class="p-3">-->
+<!--            <button type="button" class="btn btn-outline-gold pl-4 pr-4"> ACTIVATE</button>-->
+<!--        </div>-->
+<!--    </div>-->
     <a href="job-profile.html">
         <div class="shadow-sm border rounded bg-white job-item mb-3">
             <div class="d-flex align-items-center p-3 job-item-header">
