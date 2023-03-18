@@ -1,168 +1,104 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-  />
-  <meta name="description" content=""/>
-  <meta name="author" content=""/>
-  <link rel="icon" type="image/png" href="img/fav.png"/>
-  <title>NIMBUS - Job Portal & Social Network HTML Template</title>
+﻿{% extends "base/base.html" %}
+{% load static %}
 
-  <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static "vendor/slick/slick.min.css" %}"
-  />
-  <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static "vendor/slick/slick-theme.min.css" %}"
-  />
-
-  <link
-      href="{% static "vendor/icons/feather.css" %}"
-      rel="stylesheet"
-      type="text/css"
-  />
-
-  <link
-      href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}"
-      rel="stylesheet"
-  />
-
-  <link href="{% static "css/style.css" %}" rel="stylesheet"/>
-</head>
-<body>
-<div class="bg-white">
-  <div class="container">
-    <div
-        class="row justify-content-center align-items-center d-flex vh-100"
-    >
-      <div class="col-md-4 mx-auto">
-        <div class="osahan-login py-4">
-          <div class="text-center mb-4">
-            <a href="index.html"><img src="img/logo.svg" alt=""/></a>
-            <h5 class="font-weight-bold mt-3">Join Nimbus</h5>
-            <p class="text-muted">
-              Make the most of your professional life
-            </p>
-          </div>
-          <form method="post"> {% csrf_token %}
-            <div class="form-group">
-              <label class="mb-1" for="user">Username</label>
-              <div class="position-relative icon-form-control">
-                <i class="feather-user position-absolute"></i>
-                <input type="text" required class="form-control" name="user" id="user"/>
-              </div>
+{% block body %}
+  <div class="bg-white">
+    <div class="container">
+      <div
+          class="row justify-content-center align-items-center d-flex vh-100"
+      >
+        <div class="col-md-4 mx-auto">
+          <div class="osahan-login py-4">
+            <div class="text-center mb-4">
+              <a href="{% url "index" %}"><img src="img/logo.svg" alt=""/></a>
+              <h5 class="font-weight-bold mt-3">Join Nimbus</h5>
+              <p class="text-muted">
+                Make the most of your professional life
+              </p>
             </div>
-            <div class="form-row">
+            <form method="post"> {% csrf_token %}
+              <div class="form-group">
+                <label class="mb-1" for="user">Username</label>
+                <div class="position-relative icon-form-control">
+                  <i class="feather-user position-absolute"></i>
+                  <input type="text" required class="form-control" name="user" id="user"/>
+                </div>
+              </div>
+              <div class="form-row">
 
-              <div class="col">
-                <div class="form-group">
-                  <label class="mb-1">First name</label>
-                  <div class="position-relative icon-form-control">
-                    <i class="feather-user position-absolute"></i>
+                <div class="col">
+                  <div class="form-group">
+                    <label class="mb-1">First name</label>
+                    <div class="position-relative icon-form-control">
+                      <i class="feather-user position-absolute"></i>
 
-                    <input type="text" required name="first_name" class="form-control"/>
+                      <input type="text" required name="first_name" class="form-control"/>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col">
+                  <div class="form-group">
+                    <label class="mb-1">Last name</label>
+                    <div class="position-relative icon-form-control">
+                      <i class="feather-user position-absolute"></i>
+
+                      <input type="text" required name="last_name" class="form-control"/>
+                    </div>
                   </div>
                 </div>
               </div>
-
-
-              <div class="col">
-                <div class="form-group">
-                  <label class="mb-1">Last name</label>
-                  <div class="position-relative icon-form-control">
-                    <i class="feather-user position-absolute"></i>
-
-                    <input type="text" required name="last_name" class="form-control"/>
-                  </div>
+              <div class="form-group">
+                <label class="mb-1">Email</label>
+                <div class="position-relative icon-form-control">
+                  <i class="feather-at-sign position-absolute"></i>
+                  <input type="email" required class="form-control" name="email"/>
                 </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label class="mb-1">Email</label>
-              <div class="position-relative icon-form-control">
-                <i class="feather-at-sign position-absolute"></i>
-                <input type="email" required class="form-control" name="email"/>
+              <div class="form-group">
+                <label class="mb-1">Password (6 or more characters)</label>
+                <div class="position-relative icon-form-control">
+                  <i class="feather-unlock position-absolute"></i>
+                  <input type="password" required class="form-control" name="password"/>
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label class="mb-1">Password (6 or more characters)</label>
-              <div class="position-relative icon-form-control">
-                <i class="feather-unlock position-absolute"></i>
-                <input type="password" required class="form-control" name="password"/>
+              <div class="form-group">
+                <label class="mb-1"
+                >You agree to the Nimbus <a href="#">User Agreement</a>,
+                  <a href="#">Privacy Policy</a>, and
+                  <a href="#">Cookie Policy</a>.</label
+                >
               </div>
-            </div>
-            <div class="form-group">
-              <label class="mb-1"
-              >You agree to the Nimbus <a href="#">User Agreement</a>,
-                <a href="#">Privacy Policy</a>, and
-                <a href="#">Cookie Policy</a>.</label
+              <button
+                  class="btn btn-primary btn-block text-uppercase"
+                  type="submit" id="signup-submit"
               >
-            </div>
-            <button
-                class="btn btn-primary btn-block text-uppercase"
-                type="submit" id="signup-submit"
-            >
-              Agree & Join
-            </button>
-            <div class="py-3 d-flex align-item-center">
-              <a href="forgot-password.html">Forgot password?</a>
-              <span class="ml-auto">
+                Agree & Join
+              </button>
+              <div class="py-3 d-flex align-item-center">
+                <a href="forgot-password.html">Forgot password?</a>
+                <span class="ml-auto">
                     Already on Nimbus?
                     <a class="font-weight-bold" href="/accounts/login"
                     >Sign in</a
                     ></span
-              >
-            </div>
-          </form>
+                >
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<script>
-  let password = document.getElementById("password")
-  document.getElementById("signup-submit").addEventListener("click", () => {
-    if (password.value.length < 7) {
-      event.preventDefault();
-      alert("Password must be at least 7 characters long");
-    }
-  })
-</script>
-<script
-    src="{% static "vendor/jquery/jquery.min.js" %}"
-    type="6d202ca034c0ce464f942567-text/javascript"
-></script>
-<script
-    src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"
-    type="6d202ca034c0ce464f942567-text/javascript"
-></script>
+  <script>
+    let password = document.getElementById("password")
+    document.getElementById("signup-submit").addEventListener("click", () => {
+      if (password.value.length < 7) {
+        event.preventDefault();
+        alert("Password must be at least 7 characters long");
+      }
+    })
+  </script>
+{% endblock %}
 
-<script
-    type="6d202ca034c0ce464f942567-text/javascript"
-    src="{% static "vendor/slick/slick.min.js" %}"
-></script>
-
-<script
-    src="{% static "js/osahan.js" %}"
-    type="6d202ca034c0ce464f942567-text/javascript"
-></script>
-{#<script#}
-{#    src="{% static "cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" %}"#}
-{#    data-cf-settings="6d202ca034c0ce464f942567-|49"#}
-{#    defer=""#}
-{#></script>#}
-{#<script#}
-{#    defer=""#}
-{#    src="../../../beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993"#}
-{#    integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA=="#}
-{#    data-cf-beacon='{"rayId":"7a5ae234a8c629ed","version":"2023.2.0","r":1,"token":"dd471ab1978346bbb991feaa79e6ce5c","si":100}'#}
-{#    crossorigin="anonymous"#}
-{#></script>#}
-</body>
-</html>
