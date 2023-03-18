@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from accounts.models import Profile
 
+
 # Create your views here.
 
 
@@ -12,10 +13,16 @@ def index(request):
         return render(request, 'dashboard/index.html')
     return redirect('/accounts/login')
 
+
+@login_required
 def edit_profile(request):
     user = request.user
     profile = Profile.objects.filter(username=user.username).first()
     return render(request, 'dashboard/edit-profile.html', context={'profile': profile})
 
+
+@login_required
 def my_account(request):
-    return render(request, "dashboard/profile.html")
+    user = request.user
+    profile = Profile.objects.filter(username=user.username).first()
+    return render(request, "dashboard/profile.html", context={'profile': profile})
