@@ -63,7 +63,6 @@ def edit_profile(request):
         'profile': profile,
         'social': social
     })
-    return render(request, 'dashboard/edit-profile.html', context={'profile': profile})
 
 
 @login_required
