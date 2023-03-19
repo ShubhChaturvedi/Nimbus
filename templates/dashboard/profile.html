@@ -69,7 +69,7 @@
     <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center overflow-hidden">
         <img src="{% static "img/job1.png" %}" class="img-fluid" alt="Responsive image">
         <div class="p-3 border-bottom">
-            <h6 class="font-weight-bold text-dark">Osahan Solutions</h6>
+            <h6 class="font-weight-bold text-dark">Nimbus Solutions</h6>
             <p class="mb-0 text-muted">Looking for talent?</p>
         </div>
         <div class="p-3">
@@ -90,44 +90,20 @@
         <div class="box-title border-bottom p-3">
             <h6 class="m-0">Experience</h6>
         </div>
-        <div class="box-body p-3 border-bottom">
-            <div class="d-flex align-items-top job-item-header pb-2">
-                <div class="mr-2">
-                    <h6 class="font-weight-bold text-dark mb-0">Web designer</h6>
-                    <div class="text-truncate text-primary">Spotify Inc.</div>
-                    <div class="small text-gray-500">Oct 2020 - Present (4 year 7 month)</div>
+        {% for experience in profile.experience_set.all %}
+
+            <div class="box-body p-3 border-bottom">
+                <div class="d-flex align-items-top job-item-header pb-2">
+                    <div class="mr-2">
+                        <h6 class="font-weight-bold text-dark mb-0">{{ experience.designation }}</h6>
+                        <div class="text-truncate text-primary">{{ experience.company }}</div>
+                        <div class="small text-gray-500">{{ experience.from_date }} - {{ experience.to_date }}(4 year 7 month)</div>
+                    </div>
+{#                    <img class="img-fluid ml-auto mb-auto" src="/static/img/l3.png" alt="">#}
                 </div>
-                <img class="img-fluid ml-auto mb-auto" src="{% static "img/l3.png" %}" alt="">
+                <p class="mb-0">{{ experience.description }} </p>
             </div>
-            <p class="mb-0">Find the most qualified people in the most unexpected places. Information for
-                applicants to consider when applying for local positions. </p>
-        </div>
-        <div class="box-body p-3 border-bottom">
-            <div class="d-flex align-items-top job-item-header pb-2">
-                <div class="mr-2">
-                    <h6 class="font-weight-bold text-dark mb-0">Cloud Software Engineer</h6>
-                    <div class="text-truncate text-primary">Spotify Inc.</div>
-                    <div class="small text-gray-500">Oct 2020 - Present (4 year 7 month)</div>
-                </div>
-                <img class="img-fluid ml-auto mb-auto" src="{% static "img/l6.png" %}" alt="">
-            </div>
-            <p class="mb-0">Find the most qualified people in the most unexpected places. Information
-                for.. </p>
-        </div>
-        <div class="box-body p-3">
-            <div class="d-flex align-items-top job-item-header pb-2">
-                <div class="mr-2">
-                    <h6 class="font-weight-bold text-dark mb-0">UI/UX designer</h6>
-                    <div class="text-truncate text-primary">Behance</div>
-                    <div class="small text-gray-500">Oct 2020 - Present (4 year 7 month)</div>
-                </div>
-                <img class="img-fluid ml-auto mb-auto" src="{% static "img/l2.png" %}" alt="">
-            </div>
-            <p class="mb-0">Wualified people in the most unexpected places. Information for applicants to
-                consider when applying for local positions. The largest community on the web to find and
-                list jobs that aren't restricted by commutes or a specific location.
-            </p>
-        </div>
+            {% endfor %}
     </div>
     <div class="box shadow-sm border rounded bg-white mb-3">
         <div class="box-title border-bottom p-3">

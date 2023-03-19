@@ -1,34 +1,55 @@
 import json
 
-from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.generic.websocket import WebsocketConsumer
+from asgiref.sync import async_to_sync
 
+class ChatConsumer(WebsocketConsumer):
 
-class ChatConsumer(AsyncWebsocketConsumer):
+    def connect(self):
+        self.room_name = self.scope['url_route']['kwargs']['room_code']
+        self.group_name = f'room_{self.room_name}'
+        async_to_sync(self.channel_layer.group_add)(
+            self.group_name,
+            self.channel_name
 
-    async def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
-        await self.channel_layer.group_add(
-            self.channel_name,
-            self.room_group_name
         )
-        await self.accept()
-        await self.channel_layer.group_send(
-            self.room_group_name,
+        self.accept()
+        async_to_sync(self.channel_layer.group_send)(
+            f'room_{self.room_name}',
             {
+                'value': json.dumps({
+                    'status': 'online'
+                })
+            }
+        )
+        self.send(text_data = json.dumps({
                 'type' : 'tester_message',
-                'tester' : 'hello world',
+                'tester' : 'hello world'
+            }
+        ))
+
+    def receive(self , text_data):
+        data = json.loads(text_data)
+
+        print(data)
+
+        payload = {'message' : data.get('message'), 'sender' : data.get('sender')}
+        async_to_sync(self.channel_layer.group_send)(
+            f'room_{self.room_name}',
+            {
+                'type': 'send_message',
+                'value': json.dumps(payload)
             }
         )
 
-    async def test_message(self , event):
-        tester = event['tester']
-        await self.send(text_data = json.dumps({
-            'tester' : tester
-        }))
 
-    async def disconnect(self, code):
-        await self.channel_layer.group_discard(
-            self.room_group_name,
-            self.channel_name,
-        )
+
+
+    def disconnect(self, code):
+        pass
+
+    def send_message(self, text_data):
+        data = json.loads(text_data['value'])
+        self.send(text_data=json.dumps({
+            'payload': data,
+        }))

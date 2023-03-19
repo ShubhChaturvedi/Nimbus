@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from accounts.models import *
 
+
 # Create your views here.
 
 
@@ -15,7 +16,6 @@ def index(request):
 
 @login_required
 def edit_profile(request):
-
     if request.method == 'POST':
         if request.POST.get("btn") == "profile":
             fname = request.POST.get("fname")
@@ -30,7 +30,11 @@ def edit_profile(request):
             day = request.POST.get("day")
             year = request.POST.get("year")
             gender = request.POST.get("gender")
-
+            from_date = request.POST.get("from_date")
+            to_date = request.POST.get("to_date")
+            company = request.POST.get("company")
+            designation = request.POST.get("designation")
+            description = request.POST.get("description")
             print(fname, lname, email, username, website, location, phone)
 
             user = request.user
@@ -38,6 +42,7 @@ def edit_profile(request):
             profile.first_name = fname
             profile.last_name = lname
             profile.email = email
+
             if not Profile.objects.filter(username=username).exists():
                 profile.username = username
             profile.website = website
@@ -52,8 +57,32 @@ def edit_profile(request):
             else:
                 dob = DOB.objects.create(month=month, day=day, year=year, user=profile, gender=gender)
 
+
+            exp = Experience(from_date=from_date, to_date=to_date, company=company,
+                             designation=designation, description=description, user=profile)
+
+            exp.save()
             dob.save()
             profile.save()
+        if request.POST.get("btn") == "socials":
+            user = request.user
+            profile = Profile.objects.filter(username=user.username).first()
+            instagram = request.POST.get("instagram")
+            facebook = request.POST.get("facebook")
+            twitter = request.POST.get("twitter")
+            youtube = request.POST.get("youtube")
+            github = request.POST.get("github")
+            if profile.social_set.first() is not None:
+                social = profile.social_set.first()
+                social.instagram = instagram
+                social.facebook = facebook
+                social.twitter = twitter
+                social.youtube = youtube
+                social.github = github
+            else:
+                social = Social.objects.create(instagram=instagram, facebook=facebook, twitter=twitter,
+                                               youtube=youtube, github=github, user=profile)
+
 
     user = request.user
     profile = Profile.objects.filter(username=user.username).first()
@@ -70,4 +99,4 @@ def my_account(request):
     all_users = Profile.objects.order_by("?")[:5]
     user = request.user
     profile = Profile.objects.filter(username=user.username).first()
-    return render(request, "dashboard/profile.html", context={'profile': profile,'all_users':all_users})
+    return render(request, "dashboard/profile.html", context={'profile': profile, 'all_users': all_users})
