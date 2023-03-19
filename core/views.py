@@ -121,5 +121,5 @@ def connections(request):
     all_users = Profile.objects.order_by("?")[:9]
     user = request.user
     profile = Profile.objects.filter(username=user.username).first()
-    return render(request, "dashboard/profile.html", context={'profile': profile, 'all_users': all_users})
+    return render(request, "dashboard/connection.html", context={'profile': profile, 'all_users': all_users})
 
