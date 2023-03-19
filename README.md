@@ -22,11 +22,27 @@
 * Git Github Version Control
 * Maria DB Backend
 ## ER Diagrams 
-
+![erd](https://user-images.githubusercontent.com/122177943/226151297-ad82f6fe-df55-4eda-8b09-9b1706439905.png)
 ## Data Flow Diagram
 ![DFD](https://user-images.githubusercontent.com/122177943/226121229-61d0ce8e-30fb-4d54-99ae-9af6c00b1529.png)
 ## Url Patterns
+* Dashboard
+* Login Profile
+* Follower/Following
+* Edit Profile
+* Connections
+* Chat Box
 ## How to install
-## Run Projects
+* Open Repository -> code -> clone -> HTTPS -> Copy the link of Repository
+* Open directory in the terminal where you want to fork/clone the repository
+* git clone "[paste link](https://github.com/ShubhChaturvedi/Nimbus.git)"
+* pip install -r requirements.txt
+* python manage.py migrate
+* python manage.py createsuperuser
+* python manage.py runserver
 ## Bibliography
+* Google
+* Github
+* Greel for greeks
 ## How to Contribute
+* This is private repository therfore it doen't allow contribution.
