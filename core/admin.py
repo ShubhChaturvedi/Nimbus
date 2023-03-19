@@ -6,3 +6,8 @@ from .models import *
 @admin.register(Key)
 class KeyAdmin(admin.ModelAdmin):
     list_display = ('Name', 'Website_Name', 'Meta_Desc', 'Favicon', 'Logo', 'Email', 'Facebook', 'Instagram', 'Twitter')
+
+
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('user', 'description', 'Image', 'Date')

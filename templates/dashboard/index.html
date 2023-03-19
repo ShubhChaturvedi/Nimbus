@@ -5,12 +5,13 @@
   <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
     <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
       <ul class="nav nav-justified border-bottom osahan-line-tab" id="myTab" role="tablist">
+        {#        <li class="nav-item">#}
+        {#          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"#}
+        {#             aria-selected="true"><i class="feather-edit"></i> Share an update</a>#}
+        {#        </li>#}
         <li class="nav-item">
-          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-             aria-selected="true"><i class="feather-edit"></i> Share an update</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+          <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+             aria-controls="profile"
              aria-selected="false"><i class="feather-image"></i> Upload a photo</a>
         </li>
         <li class="nav-item">
@@ -19,38 +20,70 @@
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <div class="p-3 d-flex align-items-center w-100" href="#">
-            <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle" src="{% static "img/user.png" %}" alt="">
-              <div class="status-indicator bg-success"></div>
-            </div>
-            <div class="w-100">
+        {#        <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">#}
+        {#          <div class="p-3 d-flex align-items-center w-100" href="#">#}
+        {#            <div class="dropdown-list-image mr-3">#}
+        {#              <img class="rounded-circle" src="{% static "img/user.png" %}" alt="">#}
+        {#              <div class="status-indicator bg-success"></div>#}
+        {#            </div>#}
+        {#            <div class="w-100">#}
+        {#              <textarea placeholder="Write your thoughts..." class="form-control border-0 p-0 shadow-none"#}
+        {#                        rows="1"></textarea>#}
+        {#            </div>#}
+        {#          </div>#}
+        {#        </div>#}
+
+        <div class="tab-pane fade show active r8 " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="p-3 w-100">
+
+              <div class="mb-3">
+                {#              <label for="formFile" class="form-label">Default file input example</label>#}
+                <input class="form-control" type="file" id="image" name="images">
+              </div>
+
               <textarea placeholder="Write your thoughts..." class="form-control border-0 p-0 shadow-none"
-                        rows="1"></textarea>
+                        name="description"
+                        rows="3"></textarea>
             </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-          <div class="p-3 w-100">
-            <textarea placeholder="Write your thoughts..." class="form-control border-0 p-0 shadow-none"
-                      rows="3"></textarea>
-          </div>
+
+            <div class="mr-auto flex-shrink-1" style="display: flex; justify-content: flex-end">
+              {#          <button type="button" class="btn btn-light btn-sm">Preview</button>#}
+              <button type="submit" id="post" onclick="post()" class="btn btn-primary btn-sm p-1 mb-3 mx-3">Post
+                Status
+              </button>
+            </div>
+
+          </form>
         </div>
         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
           <div class="p-3 w-100">
-            <textarea placeholder="Write an article..." class="form-control border-0 p-0 shadow-none"
-                      rows="3"></textarea>
+            <form method="post">
+              {% csrf_token %}
+              <textarea placeholder="Write an article..." class="form-control border-0 p-0 shadow-none"
+                        name="description"
+                        rows="3"></textarea>
+
+              <div class="mr-auto flex-shrink-1" style="display: flex; justify-content: flex-end">
+                {#          <button type="button" class="btn btn-light btn-sm">Preview</button>#}
+                <button type="submit" id="post" onclick="post()" class="btn btn-primary btn-sm p-1 mb-3 mx-3">Post
+                  Status
+                </button>
+              </div>
+
+
+            </form>
           </div>
         </div>
       </div>
-      <div class="border-top p-3 d-flex align-items-center">
-        <div class="mr-auto"><a href="#" class="text-link small"><i class="feather-map-pin"></i> Add Location</a></div>
-        <div class="flex-shrink-1">
-          <button type="button" class="btn btn-light btn-sm">Preview</button>
-          <button type="button" class="btn btn-primary btn-sm">Post Status</button>
-        </div>
-      </div>
+      {#      <div class="border-top p-3 d-flex align-items-center">#}
+      {#        <div class="mr-auto"></div>#}
+      {#        <div class="flex-shrink-1">#}
+      {#          <button type="button" class="btn btn-light btn-sm">Preview</button>#}
+      {#          <button type="button" id="post" onclick="post()" class="btn btn-primary btn-sm">Post Status</button>#}
+      {#        </div>#}
+      {#      </div>#}
     </div>
     <div class="box shadow-sm border rounded bg-white mb-3 osahan-post">
       <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
@@ -176,26 +209,31 @@
         </div>
       </div>
     </div>
-    <div class="box mb-3 shadow-sm border rounded bg-white osahan-post">
+
+
+    {% for post in user.post_set.all %}
+
+      {% with post.user as post_user%}
+        <div class="box mb-3 shadow-sm border rounded bg-white osahan-post">
       <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
         <div class="dropdown-list-image mr-3">
-          <img class="rounded-circle" src="{% static "img/p6.png" %}" alt="">
+          <img class="rounded-circle" src="{% if post_user.profile_image %}{{ post_user.profile_image.url }}{% else %}{% static "img/user.png" %}{% endif %}"
+               alt="">
           <div class="status-indicator bg-success"></div>
         </div>
         <div class="font-weight-bold">
-          <div class="text-truncate">Collin Weiland</div>
-          <div class="small text-gray-500">Web Developer @Google</div>
+          <div class="text-truncate">{{ post_user.first_name|title }} {{ post_user.last_name|title }}</div>
+{#          <div class="small text-gray-500">Web Developer @Google</div>#}
         </div>
         <span class="ml-auto small">3 hours</span>
       </div>
       <div class="p-3 border-bottom osahan-post-body">
-        <p>Lorem ipsum dolor sit amet, consectetur 😍😎 adipisicing elit, sed do eiusmod tempo incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco <a href="#">laboris
-            consequat.</a></p>
-        <img src="{% static "img/post1.png" %}" class="img-fluid" alt="Responsive image">
+        <p>{{ post.description }}</p>
+        <img src="{% if post.Image %}{{ post.Image.url }}{% else %}{% static "img/post1.jpg" %}{% endif %}"
+             class="img-fluid" alt="Responsive image">
       </div>
       <div class="p-3 border-bottom osahan-post-footer">
-        <a href="#" class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> 16</a>
+        <a onclick="dolike({{ post.id }})" class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> 16</a>
         <a href="#" class="mr-3 text-secondary"><i class="feather-message-square"></i> 8</a>
         <a href="#" class="mr-3 text-secondary"><i class="feather-share-2"></i> 2</a>
       </div>
@@ -211,10 +249,15 @@
           </div>
         </div>
       </div>
+        <form method="post">{% csrf_token %}
       <div class="p-3">
-        <textarea placeholder="Add Comment..." class="form-control border-0 p-0 shadow-none" rows="1"></textarea>
+        <textarea placeholder="Add Comment..." name="comment" class="form-control border-0 p-0 shadow-none" rows="1"></textarea>
+        <button type="submit" id="post"  class="btn btn-primary btn-sm">Post comment</button>
       </div>
+          </form>
     </div>
+      {% endwith %}
+    {% endfor %}
   </main>
   <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
     <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
@@ -267,83 +310,31 @@
     </div>
   </aside>
   <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
-    <div class="box shadow-sm border rounded bg-white mb-3">
-      <div class="box-title border-bottom p-3">
-        <h6 class="m-0">People you might know</h6>
-      </div>
-      <div class="box-body p-3">
-        <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="{% static "img/p8.png" %}" alt="">
-            <div class="status-indicator bg-success"></div>
-          </div>
-          <div class="font-weight-bold mr-2">
-            <div class="text-truncate">Sophia Lee</div>
-            <div class="small text-gray-500">Student at Harvard
-            </div>
-          </div>
-          <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-              class="feather-user-plus"></i></button>
-</span>
+    {% if all_users %}
+      <div class="box shadow-sm border rounded bg-white mb-3">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">People you might know</h6>
         </div>
-        <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="{% static "img/p9.png" %}" alt="">
-            <div class="status-indicator bg-success"></div>
-          </div>
-          <div class="font-weight-bold mr-2">
-            <div class="text-truncate">John Doe</div>
-            <div class="small text-gray-500">Traveler
-            </div>
-          </div>
-          <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-              class="feather-user-plus"></i></button>
+        <div class="box-body p-3">
+          {% for users in all_users %}
+            <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
+              <div class="dropdown-list-image mr-3">
+                <img class="rounded-circle" src="{% static "img/p4.png" %}" alt="">
+                <div class="status-indicator bg-success"></div>
+              </div>
+              <div class="font-weight-bold mr-2">
+                <div class="text-truncate">{{ users.username }}</div>
+                <div class="small text-gray-500">@Harvard
+                </div>
+              </div>
+              <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
+                  class="feather-user-plus"></i></button>
 </span>
-        </div>
-        <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="{% static "img/p10.png" %}" alt="">
-            <div class="status-indicator bg-success"></div>
-          </div>
-          <div class="font-weight-bold mr-2">
-            <div class="text-truncate">Julia Cox</div>
-            <div class="small text-gray-500">Art Designer
             </div>
-          </div>
-          <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-              class="feather-user-plus"></i></button>
-</span>
-        </div>
-        <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="{% static "img/p11.png" %}" alt="">
-            <div class="status-indicator bg-success"></div>
-          </div>
-          <div class="font-weight-bold mr-2">
-            <div class="text-truncate">Robert Cook</div>
-            <div class="small text-gray-500">Photographer at Photography
-            </div>
-          </div>
-          <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-              class="feather-user-plus"></i></button>
-</span>
-        </div>
-        <div class="d-flex align-items-center osahan-post-header people-list">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="{% static "img/p12.png" %}" alt="">
-            <div class="status-indicator bg-success"></div>
-          </div>
-          <div class="font-weight-bold mr-2">
-            <div class="text-truncate">Richard Bell</div>
-            <div class="small text-gray-500">Graphic Designer at Envato
-            </div>
-          </div>
-          <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-              class="feather-user-plus"></i></button>
-</span>
+          {% endfor %}
         </div>
       </div>
-    </div>
+    {% endif %}
     <div class="box shadow-sm border rounded bg-white mb-3">
       <div class="box-title border-bottom p-3 d-flex align-items-center">
         <h6 class="m-0">Photos</h6>
@@ -445,3 +436,26 @@
   </aside>
 {% endblock %}
 
+{% block scripts %}
+<script>
+function dolike(id) {
+    $.ajax({
+        url: "{% url 'like' %}",
+        type: "POST",
+        data: {
+            'id': id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+        success: function (data) {
+            if (data == 'liked') {
+                $('#like' + id).removeClass('text-muted');
+                $('#like' + id).addClass('text-primary');
+            } else {
+                $('#like' + id).removeClass('text-primary');
+                $('#like' + id).addClass('text-muted');
+            }
+        }
+    });
+}
+</script>
+{% endblock %}
