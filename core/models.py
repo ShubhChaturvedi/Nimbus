@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from accounts.models import Profile
 
@@ -56,6 +58,8 @@ class Follow(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="follower")
     following = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="following")
     Date = models.DateTimeField(auto_now_add=True)
+    # UUID Field
+    roomcode = models.UUIDField(default=uuid.uuid4, editable=False)
 
 
     def __str__(self):
