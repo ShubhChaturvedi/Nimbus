@@ -6,4 +6,6 @@ urlpatterns = [
     path('edit-profile', views.edit_profile, name="edit-profile"),
     path('profile/<str:username>', views.profile, name="my-account"),
     path("api/like", views.handlelikes, name="like"),
+    path("api/comment", views.handelcomment, name="comment"),
+    path("api/follow", views.handlefollow, name="follow"),
 ]

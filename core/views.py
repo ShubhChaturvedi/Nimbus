@@ -1,6 +1,7 @@
+
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 # import login_required
 from django.contrib.auth.decorators import login_required
 from accounts.models import *
@@ -110,7 +111,7 @@ def handlelikes(request):
     print(request.user)
     if request.method == "POST":
         post_id = request.POST.get("post_id")
-    return redirect('/dashboard')
+    return HttpResponse("liked")
 def handelcomment(request):
     if request.method == "POST":
         post_id = request.POST.get("post_id")
@@ -119,4 +120,20 @@ def handelcomment(request):
         profile = Profile.objects.get(username=request.user.username)
         comment = Comment.objects.create(user=profile, post=post, comment=comment)
         comment.save()
-        return redirect('/dashboard')
+        return HttpResponse("commented")
+
+
+def handlefollow(request):
+    if request.method == "POST":
+        user_id = request.POST.get("id")
+        user = None
+        if user_id:
+            user_id = int(user_id)
+            user = Profile.objects.filter(id=user_id).first()
+        if user:
+            profile = Profile.objects.get(username=request.user.username)
+            follow = Follow(user=profile, following=user)
+            follow.save()
+            return HttpResponse("followed")
+        return HttpResponse("not followed")
+    return redirect('/dashboard')

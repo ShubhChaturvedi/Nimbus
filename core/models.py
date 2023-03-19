@@ -34,6 +34,8 @@ class Post(models.Model):
     def __str__(self):
         return self.user.username
 
+    def comment_count(self):
+        return self.comment_set.all().count()
 
 class Like(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -54,9 +56,11 @@ class Comment(models.Model):
         return self.user.username + " commented on " + self.post.Title
 
 
+
+
 class Follow(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="follower")
-    following = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="following")
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="following")
+    following = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="followers")
     Date = models.DateTimeField(auto_now_add=True)
     # UUID Field
     roomcode = models.UUIDField(default=uuid.uuid4, editable=False)

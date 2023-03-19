@@ -213,49 +213,61 @@
 
     {% for post in user.post_set.all %}
 
-      {% with post.user as post_user%}
+      {% with post.user as post_user %}
         <div class="box mb-3 shadow-sm border rounded bg-white osahan-post">
-      <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
-        <div class="dropdown-list-image mr-3">
-          <img class="rounded-circle" src="{% if post_user.profile_image %}{{ post_user.profile_image.url }}{% else %}{% static "img/user.png" %}{% endif %}"
-               alt="">
-          <div class="status-indicator bg-success"></div>
-        </div>
-        <div class="font-weight-bold">
-          <div class="text-truncate">{{ post_user.first_name|title }} {{ post_user.last_name|title }}</div>
-{#          <div class="small text-gray-500">Web Developer @Google</div>#}
-        </div>
-        <span class="ml-auto small">3 hours</span>
-      </div>
-      <div class="p-3 border-bottom osahan-post-body">
-        <p>{{ post.description }}</p>
-        <img src="{% if post.Image %}{{ post.Image.url }}{% else %}{% static "img/post1.jpg" %}{% endif %}"
-             class="img-fluid" alt="Responsive image">
-      </div>
-      <div class="p-3 border-bottom osahan-post-footer">
-        <a onclick="dolike({{ post.id }})" class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> 16</a>
-        <a href="#" class="mr-3 text-secondary"><i class="feather-message-square"></i> 8</a>
-        <a href="#" class="mr-3 text-secondary"><i class="feather-share-2"></i> 2</a>
-      </div>
-      <div class="p-3 d-flex align-items-top border-bottom osahan-post-comment">
-        <div class="dropdown-list-image mr-3">
-          <img class="rounded-circle" src="{% static "img/p7.png" %}" alt="">
-          <div class="status-indicator bg-success"></div>
-        </div>
-        <div class="font-weight-bold">
-          <div class="text-truncate"> James Spiegel <span class="float-right small">2 min</span></div>
-          <div class="small text-gray-500">Ratione voluptatem sequi en lod nesciunt. Neque porro quisquam est, quinder
-            dolorem ipsum quia dolor sit amet, consectetur
+          <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
+            <div class="dropdown-list-image mr-3">
+              <img class="rounded-circle" src="
+                  {% if post_user.profile_image %}{{ post_user.profile_image.url }}{% else %}{% static "img/user.png" %}{% endif %}"
+                   alt="">
+              <div class="status-indicator bg-success"></div>
+            </div>
+            <div class="font-weight-bold">
+              <div class="text-truncate">{{ post_user.first_name|title }} {{ post_user.last_name|title }}</div>
+              {#          <div class="small text-gray-500">Web Developer @Google</div>#}
+            </div>
+            <span class="ml-auto small">3 hours</span>
           </div>
-        </div>
-      </div>
-        <form method="post">{% csrf_token %}
-      <div class="p-3">
-        <textarea placeholder="Add Comment..." name="comment" class="form-control border-0 p-0 shadow-none" rows="1"></textarea>
-        <button type="submit" id="post"  class="btn btn-primary btn-sm">Post comment</button>
-      </div>
+          <div class="p-3 border-bottom osahan-post-body">
+            <p>{{ post.description }}</p>
+            <img src="{% if post.Image %}{{ post.Image.url }}{% else %}{% static "img/post1.jpg" %}{% endif %}"
+                 class="img-fluid" alt="Responsive image">
+          </div>
+          <div class="p-3 border-bottom osahan-post-footer">
+            <a onclick="dolike({{ post.id }})" class="mr-3 text-secondary">
+                <i class="feather-heart text-danger" id="like{{ post.id }}"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-heart-fill"
+                     viewBox="0 0 16 16" style="display: none;" id="like{{ post.id }}-1">
+                  <path fill-rule="evenodd"
+                        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                </svg>
+              16
+            </a>
+            <a href="#" class="mr-3 text-secondary"><i class="feather-message-square"></i> 8</a>
+            <a href="#" class="mr-3 text-secondary"><i class="feather-share-2"></i> 2</a>
+          </div>
+          <div class="p-3 d-flex align-items-top border-bottom osahan-post-comment">
+            <div class="dropdown-list-image mr-3">
+              <img class="rounded-circle" src="{% static "img/p7.png" %}" alt="">
+              <div class="status-indicator bg-success"></div>
+            </div>
+            <div class="font-weight-bold">
+              <div class="text-truncate"> James Spiegel <span class="float-right small">2 min</span></div>
+              <div class="small text-gray-500">Ratione voluptatem sequi en lod nesciunt. Neque porro quisquam est,
+                quinder
+                dolorem ipsum quia dolor sit amet, consectetur
+              </div>
+            </div>
+          </div>
+          <form method="post" action="api/commment" >{% csrf_token %}
+            <div class="p-3">
+              <textarea placeholder="Add Comment..." name="comment" class="form-control border-0 p-0 shadow-none"
+                        rows="1"></textarea>
+              <button type="submit" id="post" class="btn btn-primary btn-sm">Post comment</button>
+            </div>
           </form>
-    </div>
+        </div>
       {% endwith %}
     {% endfor %}
   </main>
@@ -268,12 +280,12 @@
       </div>
       <div class="d-flex">
         <div class="col-6 border-right p-3">
-          <h6 class="font-weight-bold text-dark mb-1">358</h6>
-          <p class="mb-0 text-black-50 small">Connections</p>
+          <h6 class="font-weight-bold text-dark mb-1">{{ following }}</h6>
+          <p class="mb-0 text-black-50 small">Following</p>
         </div>
-        <div class="col-6 p-3">
-          <h6 class="font-weight-bold text-dark mb-1">85</h6>
-          <p class="mb-0 text-black-50 small">Views</p>
+        <div class="col-6 border-right p-3">
+          <h6 class="font-weight-bold text-dark mb-1">{{ followers }}</h6>
+          <p class="mb-0 text-black-50 small">Followers</p>
         </div>
       </div>
       <div class="overflow-hidden border-top">
@@ -327,7 +339,7 @@
                 <div class="small text-gray-500">@Harvard
                 </div>
               </div>
-              <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
+              <span class="ml-auto"><button type="button" id="{{ users.id }}" class="btn btn-light btn-sm follow-btn"><i
                   class="feather-user-plus"></i></button>
 </span>
             </div>
@@ -437,25 +449,89 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-function dolike(id) {
-    $.ajax({
-        url: "{% url 'like' %}",
+{#  <script>#}
+{#    function dolike(id) {#}
+{#      console.log(id)#}
+{#      $.ajax({#}
+{#        url: "{% url 'like' %}",#}
+{#        type: "POST",#}
+{#        data: {#}
+{#          'id': id,#}
+{#          'csrfmiddlewaretoken': '{{ csrf_token }}'#}
+{#        },#}
+{#        success: function (data){#}
+{#        console.log(data);#}
+{#          if (data == 'liked') {#}
+{#            console.log($(`#like${id}`).innerHTML)#}
+{#            $(`#like${id}`).style.display= 'none';#}
+{#            $(`#like${id}-1`).style = {'display': 'block'};#}
+{#          } else {#}
+{#            $(`#like${id}-1`).style.display = 'none';#}
+{#            $(`#like${id}`).style.display = 'block';#}
+{##}
+{##}
+{#          }#}
+{#        }#}
+{#      });#}
+{#    };#}
+{##}
+{##}
+{##}
+{#  </script>#}
+
+  <script>
+  {#let btn = $(".follow-btn");#}
+  {#  btn.click(function () {#}
+  {#    let id = $(this).attr('id');#}
+  {#    $.ajax({#}
+  {#      url: "{% url 'follow' %}",#}
+  {#      type: "POST",#}
+  {#      data: {#}
+  {#        'id': id,#}
+  {#        'csrfmiddlewaretoken': '{{ csrf_token }}'#}
+  {#      },#}
+        {#success: function (data) {#}
+        {#  if (data == 'followed') {#}
+        {#    $(`#${id}`).html('Following');#}
+        {#    $(`#${id}`).removeClass('btn-outline-primary');#}
+        {#    $(`#${id}`).addClass('btn-primary');#}
+        {#  } else {#}
+        {#    $(`#${id}`).html('Follow');#}
+        {#    $(`#${id}`).removeClass('btn-primary');#}
+        {#    $(`#${id}`).addClass('btn-outline-primary');#}
+        {#  }#}
+  {##}
+  {#    });#}
+  {#  });#}
+
+  let btn = document.querySelectorAll('.follow-btn');
+  btn.forEach(function (item) {
+    item.addEventListener('click', function () {
+      let id = this.getAttribute('id');
+      $.ajax({
+        url: "{% url 'follow' %}",
         type: "POST",
         data: {
-            'id': id,
-            'csrfmiddlewaretoken': '{{ csrf_token }}'
+          'id': id,
+          'csrfmiddlewaretoken': '{{ csrf_token }}'
         },
         success: function (data) {
-            if (data == 'liked') {
-                $('#like' + id).removeClass('text-muted');
-                $('#like' + id).addClass('text-primary');
-            } else {
-                $('#like' + id).removeClass('text-primary');
-                $('#like' + id).addClass('text-muted');
-            }
+          console.log(data)
+          if (data === 'followed') {
+            $(`#${id}`).html('Following');
+            $(`#${id}`).removeClass('btn-outline-primary');
+            $(`#${id}`).addClass('btn-primary');
+          } else {
+            $(`#${id}`).html('Follow');
+            $(`#${id}`).removeClass('btn-primary');
+            $(`#${id}`).addClass('btn-outline-primary');
+          }
+
         }
-    });
-}
+      });
+    })
+  })
+
 </script>
+
 {% endblock %}
