@@ -1,18 +1,35 @@
 from django.conf import settings
-from django.shortcuts import render, redirect
+from django.core.files.storage import FileSystemStorage
+from django.shortcuts import render, redirect, HttpResponse
 # import login_required
 from django.contrib.auth.decorators import login_required
 from accounts.models import *
-from django.core.files.storage import FileSystemStorage
+from .models import *
+from django.db.models import Q
 
 
 # Create your views here.
 
 
 def index(request):
-    print(request.user.is_authenticated)
     if request.user.is_authenticated:
-        return render(request, 'dashboard/index.html')
+
+        if request.method == 'POST':
+            description = request.POST.get("description")
+            image = request.FILES.get('images')
+            profile = Profile.objects.get(username=request.user.username)
+            post = Post(description=description, user=profile)
+
+            if image is not None:
+                fss = FileSystemStorage()
+                fss.location = settings.MEDIA_ROOT / "user/profile"
+                file = fss.save(image.name, image)
+                post.Image = "user/profile/" + file
+            post.save()
+            return redirect('/dashboard/')
+
+        all_users = Profile.objects.filter(~Q(username=request.user.username)).order_by("?")[:5]
+        return render(request, 'dashboard/index.html', context={'all_users': all_users})
     return redirect('/accounts/login')
 
 
@@ -98,9 +115,10 @@ def edit_profile(request):
 
 
 @login_required
-def my_account(request):
-    all_users = Profile.objects.order_by("?")[:5]
-    user = request.user
+def profile(request, username):
+    user = Profile.objects.filter(username=username).first()
+    if not user:
+        return redirect('/dashboard')
     profile = Profile.objects.filter(username=user.username).first()
     return render(request, "dashboard/profile.html", context={'profile': profile,'all_users':all_users})
 
@@ -117,9 +135,43 @@ def handleUploadProfile(request):
         profField.save()
         return redirect('/dashboard/edit-profile')
 
+
+def handlelikes(request):
+    print(request.user)
+    if request.method == "POST":
+        post_id = request.POST.get("post_id")
+    return HttpResponse("liked")
+    
+
+def handelcomment(request):
+    if request.method == "POST":
+        post_id = request.POST.get("post_id")
+        comment = request.POST.get("comment")
+        post = Post.objects.get(id=post_id)
+        profile = Profile.objects.get(username=request.user.username)
+        comment = Comment.objects.create(user=profile, post=post, comment=comment)
+        comment.save()
+        return HttpResponse("commented")
+
+
+def handlefollow(request):
+    if request.method == "POST":
+        user_id = request.POST.get("id")
+        user = None
+        if user_id:
+            user_id = int(user_id)
+            user = Profile.objects.filter(id=user_id).first()
+        if user:
+            profile = Profile.objects.get(username=request.user.username)
+            follow = Follow(user=profile, following=user)
+            follow.save()
+            return HttpResponse("followed")
+        return HttpResponse("not followed")
+    return redirect('/dashboard')
+   
+
 def connections(request):
     all_users = Profile.objects.order_by("?")[:9]
     user = request.user
     profile = Profile.objects.filter(username=user.username).first()
     return render(request, "dashboard/profile.html", context={'profile': profile, 'all_users': all_users})
-
