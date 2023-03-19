@@ -44,4 +44,3 @@ class DOB(models.Model):
     year = models.CharField(max_length=100, null=True, blank=True)
     gender = models.CharField(max_length=100, null=True, blank=True)
 
-
