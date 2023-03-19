@@ -45,3 +45,11 @@ class DOB(models.Model):
     gender = models.CharField(max_length=100, null=True, blank=True)
 
 
+
+class Experience(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    from_date = models.DateField(null=True, blank=True)
+    to_date = models.DateField(null=True, blank=True)
+    company = models.TextField(max_length=100)
+    designation = models.TextField(max_length=100)
+    description = models.TextField(max_length=1000, null=True, blank=True)

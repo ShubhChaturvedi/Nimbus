@@ -8,4 +8,6 @@ urlpatterns = [
     path("api/like", views.handlelikes, name="like"),
     path("api/comment", views.handelcomment, name="comment"),
     path("api/follow", views.handlefollow, name="follow"),
+    path('handleUploadProfile', views.handleUploadProfile, name="uploadprofile"),
+    path('connections', views.connections, name="connections"),
 ]

@@ -18,9 +18,12 @@ class SocialInline(admin.StackedInline):
     model = Social
     extra = 1
 
+class ExperienceInline(admin.StackedInline):
+    model = Experience
+    extra = 1
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    inlines = [SkillInline, DOBInline, SocialInline]
+    inlines = [SkillInline, DOBInline, SocialInline, ExperienceInline]
     exclude = ('password', 'last_login', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'groups', 'user_permissions')
     list_display = ('username', 'email', 'phone', 'website', 'location', 'bio', 'profile_image', 'job_experience', 'is_email_verified')
