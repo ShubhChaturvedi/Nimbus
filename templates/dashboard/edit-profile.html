@@ -3,36 +3,6 @@
 
 
 {% block content %}
-
-  <aside class="col-md-4">
-    <div class="mb-3 border rounded bg-white profile-box text-center w-10">
-      <form class="p-4 d-flex align-items-center" method="post" action="{% url 'uploadprofile' %}" enctype="multipart/form-data">
-      {% csrf_token %}
-        <img src="{% if profile.profile_image %}{{ profile.profile_image.url }} {% else %} {% static 'img/p13.png' %} {%endif%}" class="img-fluid rounded-circle" alt="Responsive image" style="max-width: 50%;">
-        <div class="p-4">
-          <label data-toggle="tooltip" data-placement="top" data-original-title="Upload New Picture"
-                 class="btn btn-info m-0" for="fileAttachmentBtn">
-            <i class="feather-image"></i>
-            <input id="fileAttachmentBtn" name="profile" type="file" class="d-none">
-          </label>
-          <button data-toggle="tooltip" data-placement="top" data-original-title="Delete" type="submit"
-                  class="btn btn-danger"><i class="feather-trash-2"></i></button>
-          <button class="font-weight-bold btn btn-light rounded p-2 mt-2 d-block" type="submit"> Save Profile </button>
-        </div>
-      </form>
-    </div>
-    <div class="border rounded bg-white mb-3">
-      <div class="box-title border-bottom p-3">
-        <h6 class="m-0">About</h6>
-        <p class="mb-0 mt-0 small">Tell about yourself in two sentences.
-        </p>
-      </div>
-      <div class="box-body">
-        <div class="p-3 border-bottom">
-          <div class="form-group mb-4">
-            <label class="mb-1">BIO</label>
-            <div class="position-relative">
-              <textarea class="form-control" rows="4" name="text" placeholder="Enter Bio">{{ profile.bio }}</textarea>
     <aside class="col-md-4">
         <div class="mb-3 border rounded bg-white profile-box text-center w-10">
             <div class="p-4 d-flex align-items-center">

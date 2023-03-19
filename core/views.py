@@ -110,7 +110,6 @@ def handleUploadProfile(request):
         profField = Profile.objects.filter(username=request.user.username).first()
         # get upload to location from profile model
         upload = request.FILES['profile']
-        print(upsload)
         fss = FileSystemStorage()
         fss.location = settings.MEDIA_ROOT / "user/profile"
         file = fss.save(upload.name, upload)
