@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.shortcuts import render, redirect
 # import login_required
 from django.contrib.auth.decorators import login_required
 from accounts.models import *
+from django.core.files.storage import FileSystemStorage
 
 
 # Create your views here.
@@ -85,6 +87,7 @@ def edit_profile(request):
 
 
     user = request.user
+
     profile = Profile.objects.filter(username=user.username).first()
 
     social = profile.social_set.first()
@@ -99,4 +102,25 @@ def my_account(request):
     all_users = Profile.objects.order_by("?")[:5]
     user = request.user
     profile = Profile.objects.filter(username=user.username).first()
+    return render(request, "dashboard/profile.html", context={'profile': profile,'all_users':all_users})
+
+
+def handleUploadProfile(request):
+    if request.method == "POST" and request.FILES['profile']:
+        profField = Profile.objects.filter(username=request.user.username).first()
+        # get upload to location from profile model
+        upload = request.FILES['profile']
+        print(upsload)
+        fss = FileSystemStorage()
+        fss.location = settings.MEDIA_ROOT / "user/profile"
+        file = fss.save(upload.name, upload)
+        profField.profile_image = "user/profile/" + str(file)
+        profField.save()
+        return redirect('/dashboard/edit-profile')
+
+def connections(request):
+    all_users = Profile.objects.order_by("?")[:9]
+    user = request.user
+    profile = Profile.objects.filter(username=user.username).first()
     return render(request, "dashboard/profile.html", context={'profile': profile, 'all_users': all_users})
+
