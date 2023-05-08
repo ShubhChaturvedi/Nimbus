@@ -417,9 +417,10 @@
 
 
 {% block scripts %}
-{#    {{ room_name|json_script : "room_name" }}#}
+    {{ room_name|json_script:"room_name" }}
     <script>
         const roomName = JSON.parse(document.getElementById("room_name").textContent)
+        if (roomName){
         const chatSocket = new WebSocket(
             'ws://'
             + window.location.host
@@ -430,7 +431,8 @@
 
         chatSocket.onmessage = function (e){
             const data = JSON.parse(e.data)
-            document.querySelector()
+            console.log(data)
+        }
         }
     </script>
 {% endblock %}

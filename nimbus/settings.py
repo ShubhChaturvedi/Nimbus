@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
+    'daphne',
     'core',
     'accounts',
     'django.contrib.admin',
@@ -81,7 +81,7 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'nimbus.wsgi.application'
+WSGI_APPLICATION = 'nimbus.wsgi.application'
 ASGI_APPLICATION = 'nimbus.asgi.application'
 
 CHANNEL_LAYERS = {
